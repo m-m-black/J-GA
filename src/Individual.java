@@ -3,8 +3,8 @@ public class Individual {
     private DNA dna;
     private double fitness;
 
-    public Individual() {
-        this.dna = new DNA();
+    public Individual(int chromosomeLength) {
+        this.dna = new DNA(chromosomeLength);
         this.fitness = 0.0;
     }
 

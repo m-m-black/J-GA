@@ -9,6 +9,6 @@ public class Main extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Running...");
+        // Show menu, initialise parameters from user input, perform runs
     }
 }
