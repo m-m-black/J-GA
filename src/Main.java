@@ -6,6 +6,7 @@ public class Main extends Thread {
 
     Population population;
     int popSize;
+    int genNum;
     int chromosomeLength;
     int fieldSize;
     double crossoverRate;
@@ -18,7 +19,8 @@ public class Main extends Thread {
     @Override
     public void run() {
         // Show menu, initialise parameters from user input, perform runs
-        System.out.println("System running...");
+        System.out.println("RUN [pop. size] [gen. number] [crossover] [mutation] -> run a single simulation\n" +
+                "QUIT -> exit the program");
         try {
             while (!quit && (line = bufferedReader.readLine()) != null) {
                 String[] tokens = line.split(" ");
@@ -30,7 +32,12 @@ public class Main extends Thread {
                         System.out.println("You typed [print]");
                         break;
                     case "RUN":
-                        System.out.println("You typed [run]");
+                        popSize = Integer.parseInt(tokens[1]);
+                        genNum = Integer.parseInt(tokens[2]);
+                        crossoverRate = Double.parseDouble(tokens[3]);
+                        mutationRate = Double.parseDouble(tokens[4]);
+                        Population population = new Population(popSize, 16);
+                        population.printPop();
                         break;
                     case "QUIT":
                         quit = true;

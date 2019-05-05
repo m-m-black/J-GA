@@ -14,4 +14,13 @@ public class Population {
         }
     }
 
+    public void printPop() {
+        for (Individual i: population) {
+            for (int d: i.getDna()) {
+                System.out.print(d);
+            }
+            System.out.println();
+        }
+    }
+
 }

@@ -20,4 +20,7 @@ public class Individual {
 
     }
 
+    public int[] getDna() {
+        return dna.getChromosome();
+    }
 }
