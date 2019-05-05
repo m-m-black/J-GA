@@ -1,8 +1,9 @@
 public class Utility {
 
-    public static int binToInt(int[] bits) {
+    public static int binToInt(int[] bits, int from, int to) {
         String binaryString = "";
-        for (int i = 0; i < bits.length; i++) {
+        // Iterate over slice of array [from - 1 ... to - 1]
+        for (int i = from - 1; i < to; i++) {
             binaryString += bits[i];
         }
         int decimal = Integer.parseInt(binaryString, 2);
