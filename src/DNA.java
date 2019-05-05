@@ -22,4 +22,5 @@ public class DNA {
     public int[] getChromosome() {
         return chromosome;
     }
-}
+
+} // End of class DNA

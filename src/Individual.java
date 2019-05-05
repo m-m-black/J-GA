@@ -23,4 +23,9 @@ public class Individual {
     public int[] getDna() {
         return dna.getChromosome();
     }
-}
+
+    public void setFitness(double fitness) {
+        this.fitness = fitness;
+    }
+
+} // End of class Individual
