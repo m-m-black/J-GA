@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+
 public class Population {
 
     Individual[] population;
+    ArrayList<Individual> matingPool;
 
     public Population(int popSize, int chromosomeLength) {
         this.population = new Individual[popSize];
+        this.matingPool = new ArrayList<Individual>();
         initPop(popSize, chromosomeLength);
     }
 
@@ -41,7 +45,15 @@ public class Population {
     }
 
     private void select() {
-
+        // Build mating pool
+        matingPool.clear();
+        for (Individual i: population) {
+            // Add each Individual to the mating pool n times according to its fitness score
+            int n = (int) i.getFitness() * 100;
+            for (int j = 0; j < n; j++) {
+                matingPool.add(i);
+            }
+        }
     }
 
     private void crossover() {
