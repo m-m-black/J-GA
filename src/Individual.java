@@ -43,7 +43,19 @@ public class Individual {
     }
 
     public void mutate(double mutationRate) {
-
+        Random random = new Random();
+        int[] chromosome = this.getDna();
+        // Iterate over chromosome, flipping bits if we exceed the mutation threshold
+        for (int i = 0; i < chromosome.length; i++) {
+            if (random.nextDouble() < mutationRate) {
+                if (chromosome[i] == 0) {
+                    chromosome[i] = 1;
+                } else {
+                    chromosome[i] = 0;
+                }
+            }
+        }
+        this.setDNA(new DNA(chromosome));
     }
 
     public int[] getDna() {
