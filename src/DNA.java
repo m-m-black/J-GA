@@ -8,6 +8,11 @@ public class DNA {
         this.chromosome = initChromosome(chromosomeLength);
     }
 
+    public DNA(int[] chromosome) {
+        // Pass in DNA from crossover function
+        this.chromosome = chromosome;
+    }
+
     private int[] initChromosome(int chromosomeLength) {
         int[] chromosome = new int[chromosomeLength];
         // Randomly initialise each bit
@@ -21,6 +26,10 @@ public class DNA {
 
     public int[] getChromosome() {
         return chromosome;
+    }
+
+    public void setChromosome(int[] chromosome) {
+        this.chromosome = chromosome;
     }
 
 } // End of class DNA

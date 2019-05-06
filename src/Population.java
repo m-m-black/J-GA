@@ -23,4 +23,34 @@ public class Population {
         }
     }
 
+    public void evolve(int genNum) {
+        for (int i = 0; i < genNum; i++) {
+            // assess fitness of each Individual
+            assessFitness();
+            // perform selection
+            select();
+            // perform crossover
+            crossover();
+        }
+    }
+
+    private void assessFitness() {
+        for (Individual i: population) {
+            Fitness.assess(i);
+        }
+    }
+
+    private void select() {
+
+    }
+
+    private void crossover() {
+        // Select 2 parents from mating pool and perform crossover
+        // Mutation occurs in crossover function in Individual class
+    }
+
+    private void mutate() {
+
+    }
+
 } // End of class Population

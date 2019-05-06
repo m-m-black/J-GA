@@ -36,8 +36,11 @@ public class Main extends Thread {
                         genNum = Integer.parseInt(tokens[2]);
                         crossoverRate = Double.parseDouble(tokens[3]);
                         mutationRate = Double.parseDouble(tokens[4]);
+                        // Initialise the Population
                         Population population = new Population(popSize, 16);
                         population.printPop();
+                        // Perform genNum generations of evolution
+                        population.evolve(genNum);
                         break;
                     case "QUIT":
                         quit = true;
