@@ -32,22 +32,40 @@ public class Population {
         }
     }
 
+    private String buildBitString(int[] chromosome) {
+        String bitString = "";
+        for (int i: chromosome) {
+            bitString += i;
+        }
+        return bitString;
+    }
+
     public void evolve(int genNum) {
         for (int i = 0; i < genNum; i++) {
             // assess fitness of each Individual
-            assessFitness();
+            Individual bestIndividual = assessFitness();
             // perform selection
             select();
             // perform crossover
             reproduce(chromosomeLength, mutationRate);
             // Output bit string and fitness of best individual each generation
+            String bitString = buildBitString(bestIndividual.getDna());
+            System.out.println("Chromosome: " + bitString + "\tFitness: " + bestIndividual.getFitness());
         }
     }
 
-    private void assessFitness() {
+    private Individual assessFitness() {
+        double maxFitness = 0.0;
+        Individual bestIndividual = null;
         for (Individual i: population) {
             Fitness.assess(i);
+            double fitness = i.getFitness();
+            if (fitness > maxFitness) {
+                maxFitness = fitness;
+                bestIndividual = i;
+            }
         }
+        return bestIndividual;
     }
 
     private void select() {

@@ -1,3 +1,7 @@
+/*
+    Use this class to define your application-specific fitness function
+ */
+
 public class Fitness {
 
     // Target musical phrase is hardcoded for now
