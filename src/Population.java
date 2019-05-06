@@ -1,13 +1,18 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Population {
 
     Individual[] population;
     ArrayList<Individual> matingPool;
+    int chromosomeLength;
+    double mutationRate;
 
-    public Population(int popSize, int chromosomeLength) {
+    public Population(int popSize, int chromosomeLength, double mutationRate) {
         this.population = new Individual[popSize];
         this.matingPool = new ArrayList<Individual>();
+        this.chromosomeLength = chromosomeLength;
+        this.mutationRate = mutationRate;
         initPop(popSize, chromosomeLength);
     }
 
@@ -34,7 +39,8 @@ public class Population {
             // perform selection
             select();
             // perform crossover
-            crossover();
+            reproduce(chromosomeLength, mutationRate);
+            // Output bit string and fitness of best individual each generation
         }
     }
 
@@ -56,13 +62,19 @@ public class Population {
         }
     }
 
-    private void crossover() {
+    private void reproduce(int chromosomeLength, double mutationRate) {
         // Select 2 parents from mating pool and perform crossover
         // Mutation occurs in crossover function in Individual class
-    }
-
-    private void mutate() {
-
+        // Population is replaced by children in this scheme
+        Random random = new Random();
+        for (int i = 0; i < population.length; i++) {
+            int a = random.nextInt(matingPool.size());
+            int b = random.nextInt(matingPool.size());
+            Individual parentA = matingPool.get(a);
+            Individual parentB = matingPool.get(b);
+            Individual child = parentA.crossover(parentB, chromosomeLength, mutationRate);
+            population[i] = child;
+        }
     }
 
 } // End of class Population
