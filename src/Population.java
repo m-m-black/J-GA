@@ -6,12 +6,14 @@ public class Population {
     Individual[] population;
     ArrayList<Individual> matingPool;
     int chromosomeLength;
+    double crossoverRate;
     double mutationRate;
 
-    public Population(int popSize, int chromosomeLength, double mutationRate) {
+    public Population(int popSize, int chromosomeLength, double crossoverRate, double mutationRate) {
         this.population = new Individual[popSize];
-        this.matingPool = new ArrayList<Individual>();
+        this.matingPool = new ArrayList<>();
         this.chromosomeLength = chromosomeLength;
+        this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
         initPop(popSize, chromosomeLength);
     }
@@ -47,7 +49,7 @@ public class Population {
             // perform selection
             select();
             // perform crossover
-            reproduce(chromosomeLength, mutationRate);
+            reproduce(chromosomeLength, crossoverRate, mutationRate);
             // Output bit string and fitness of best individual each generation
             String bitString = buildBitString(bestIndividual.getDna());
             System.out.println("Chromosome: " + bitString + "\tFitness: " + bestIndividual.getFitness());
@@ -80,18 +82,27 @@ public class Population {
         }
     }
 
-    private void reproduce(int chromosomeLength, double mutationRate) {
-        // Select 2 parents from mating pool and perform crossover
+    private void reproduce(int chromosomeLength, double crossoverRate, double mutationRate) {
+        // Set crossover point in population based on crossover rate
+        // Select 2 parents from mating pool and perform crossover, while i < crossover point
+        // Copy best fit individuals from mating pool once i >= crossover point
         // Mutation occurs in crossover function in Individual class
-        // Population is replaced by children in this scheme
+        int crossoverPoint = (int) (population.length * crossoverRate);
         Random random = new Random();
         for (int i = 0; i < population.length; i++) {
-            int a = random.nextInt(matingPool.size());
-            int b = random.nextInt(matingPool.size());
-            Individual parentA = matingPool.get(a);
-            Individual parentB = matingPool.get(b);
-            Individual child = parentA.crossover(parentB, chromosomeLength, mutationRate);
-            population[i] = child;
+            if (i < crossoverPoint) {
+                int a = random.nextInt(matingPool.size());
+                int b = random.nextInt(matingPool.size());
+                Individual parentA = matingPool.get(a);
+                Individual parentB = matingPool.get(b);
+                Individual child = parentA.crossover(parentB, chromosomeLength, mutationRate);
+                population[i] = child;
+            } else {
+                int a = random.nextInt(matingPool.size());
+                Individual child = matingPool.get(a);
+                child.mutate(mutationRate);
+                population[i] = child;
+            }
         }
     }
 
