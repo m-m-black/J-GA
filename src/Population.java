@@ -51,8 +51,9 @@ public class Population {
             // perform crossover
             reproduce(chromosomeLength, crossoverRate, mutationRate);
             // Output bit string and fitness of best individual each generation
-            String bitString = buildBitString(bestIndividual.getDna());
-            System.out.println("Chromosome: " + bitString + "\tFitness: " + bestIndividual.getFitness());
+            String phenotype = Utility.genoToPheno(bestIndividual.getDna());
+            System.out.println("Generation " + i + ", best fitness: " + bestIndividual.getFitness());
+            System.out.println("Chromosome: " + phenotype);
         }
     }
 
