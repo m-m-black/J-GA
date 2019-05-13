@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,6 +12,7 @@ public class Population {
     int chromosomeLength;
     double crossoverRate;
     double mutationRate;
+    PrintWriter fileOutput;
 
     public Population(int popSize, int chromosomeLength, double crossoverRate, double mutationRate) {
         this.population = new Individual[popSize];
@@ -16,6 +21,11 @@ public class Population {
         this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
         initPop(popSize, chromosomeLength);
+        try {
+            this.fileOutput = new PrintWriter(new FileWriter(new File("lines.txt")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initPop(int popSize, int chromosomeLength) {
@@ -52,9 +62,11 @@ public class Population {
             reproduce(chromosomeLength, crossoverRate, mutationRate);
             // Output bit string and fitness of best individual each generation
             String phenotype = Utility.genoToPheno(bestIndividual.getDna());
+            fileOutput.println(phenotype);
             System.out.println("Generation " + i + ", best fitness: " + bestIndividual.getFitness());
             System.out.println("Chromosome: " + phenotype);
         }
+        fileOutput.close();
     }
 
     private Individual assessFitness() {
