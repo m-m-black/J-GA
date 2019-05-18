@@ -8,7 +8,7 @@ public class Fitness {
     private static final int[] target = {1, 0, 0, 4, 5, 8, 13, 11, 0, 0, 8, 15, 0, 8, 11, 13};
 
     // Static fitness function, call on each Individual, will update fitness value from this function
-    public static void assess(Individual individual) {
+    public static void assess(Individual individual, int[] target) {
         // read Individual's DNA, calculate fitness, update fitness (stored in Individual)
         int[] chrom = individual.getDna();
         int start, stop;

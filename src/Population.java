@@ -13,13 +13,15 @@ public class Population {
     double crossoverRate;
     double mutationRate;
     PrintWriter fileOutput;
+    int[] target;
 
-    public Population(int popSize, int chromosomeLength, double crossoverRate, double mutationRate) {
+    public Population(int popSize, int chromosomeLength, double crossoverRate, double mutationRate, int[] target) {
         this.population = new Individual[popSize];
         this.matingPool = new ArrayList<>();
         this.chromosomeLength = chromosomeLength;
         this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
+        this.target = target;
         initPop(popSize, chromosomeLength);
         try {
             this.fileOutput = new PrintWriter(new FileWriter(new File("lines.txt")));
@@ -73,7 +75,7 @@ public class Population {
         double maxFitness = 0.0;
         Individual bestIndividual = null;
         for (Individual i: population) {
-            Fitness.assess(i);
+            Fitness.assess(i, target);
             double fitness = i.getFitness();
             if (fitness > maxFitness) {
                 maxFitness = fitness;

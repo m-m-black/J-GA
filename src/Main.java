@@ -11,6 +11,7 @@ public class Main extends Thread {
     int fieldSize;
     double crossoverRate;
     double mutationRate;
+    int[] target;
 
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     String line;
@@ -19,7 +20,7 @@ public class Main extends Thread {
     @Override
     public void run() {
         // Show menu, initialise parameters from user input, perform runs
-        System.out.println("RUN [pop. size] [gen. number] [crossover] [mutation] -> run a single simulation\n" +
+        System.out.println("RUN [pop. size] [gen. number] [crossover] [mutation] [target] -> run a single simulation\n" +
                 "QUIT -> exit the program");
         try {
             while (!quit && (line = bufferedReader.readLine()) != null) {
@@ -36,8 +37,10 @@ public class Main extends Thread {
                         genNum = Integer.parseInt(tokens[2]);
                         crossoverRate = Double.parseDouble(tokens[3]);
                         mutationRate = Double.parseDouble(tokens[4]);
+                        target = setTarget(tokens[5].toLowerCase());
+                        chromosomeLength = target.length * 4;
                         // Initialise the Population
-                        Population population = new Population(popSize, 64, crossoverRate, mutationRate);
+                        Population population = new Population(popSize, chromosomeLength, crossoverRate, mutationRate, target);
                         // Perform genNum generations of evolution
                         population.evolve(genNum);
                         break;
@@ -50,6 +53,18 @@ public class Main extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private int[] setTarget(String targetName) {
+        int[] dt = {1, 0, 0, 4, 5, 8, 13, 11, 0, 0, 8, 15, 0, 8, 11, 13};
+        int[] pg = {1, 3, 4, 6, 8, 4, 8, 0, 7, 3, 7, 0, 6, 2, 6, 0, 1, 3, 4, 6, 8, 4, 8, 13, 11, 8, 4, 8, 11, 0, 0, 0};
+        if (targetName.equals("dt")) {
+            return dt;
+        } else if (targetName.equals("pg")) {
+            return pg;
+        } else {
+            return null;
         }
     }
 
