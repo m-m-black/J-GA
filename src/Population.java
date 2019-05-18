@@ -86,11 +86,14 @@ public class Population {
     }
 
     private void select() {
+        // Max Cost will change based on fitness function used
+        int maxCost = target.length;
         // Build mating pool
         matingPool.clear();
         for (Individual i: population) {
             // Add each Individual to the mating pool n times according to its cost score
-            int n = (int) i.getCost() * 100;
+            // Cost is scaled to low costs result in more additions to the pool
+            int n = (int) Utility.map(i.getCost(), 0, maxCost, maxCost, 0) * 100;
             for (int j = 0; j < n; j++) {
                 matingPool.add(i);
             }
