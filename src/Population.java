@@ -35,7 +35,10 @@ public class Population {
 
     // User-specified maximum cost for each individual
     private int setMaxCost() {
-        maxCost = target.length;
+        // For binary matching cost function
+        //maxCost = target.length;
+        // For absolute error cost function
+        maxCost = (target.length * 16);
         return maxCost;
     }
 
@@ -75,6 +78,7 @@ public class Population {
         double minCost = maxCost;
         Individual bestIndividual = null;
         for (Individual i: population) {
+            // Call the user-defined cost function on each individual
             Cost.assess(i, target);
             double cost = i.getCost();
             if (cost < minCost) {
@@ -90,12 +94,13 @@ public class Population {
         matingPool.clear();
         for (Individual i: population) {
             // Add each Individual to the mating pool n times according to its cost score
-            // Cost is scaled to low costs result in more additions to the pool
+            // Cost is scaled so low costs result in more additions to the pool
             int n = (int) Utility.map(i.getCost(), 0, maxCost, maxCost, 0) * 100;
             for (int j = 0; j < n; j++) {
                 matingPool.add(i);
             }
         }
+        System.out.println(matingPool.size());
     }
 
     private void reproduce(int chromosomeLength, double crossoverRate, double mutationRate) {
