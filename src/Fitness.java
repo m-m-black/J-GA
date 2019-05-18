@@ -4,9 +4,6 @@
 
 public class Fitness {
 
-    // Target musical phrase is hardcoded for now
-    private static final int[] target = {1, 0, 0, 4, 5, 8, 13, 11, 0, 0, 8, 15, 0, 8, 11, 13};
-
     // Static fitness function, call on each Individual, will update fitness value from this function
     public static void assess(Individual individual, int[] target) {
         // read Individual's DNA, calculate fitness, update fitness (stored in Individual)
@@ -17,7 +14,7 @@ public class Fitness {
         // because mean error fitness function will be cost minimisation
 
         // Iterate over chromosome, store int value of each slice of bit string as 'tmp'
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < target.length; i++) {
             start = (i * 4) + 1;
             stop = (i + 1) * 4;
             double temp = Utility.binToInt(chrom, start, stop);

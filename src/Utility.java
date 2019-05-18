@@ -12,12 +12,12 @@ public class Utility {
 
     public static String genoToPheno(int[] chromosome) {
         String phenotype = "";
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < (chromosome.length / 4); i++) {
             int start = (i * 4) + 1;
             int stop = (i + 1) * 4;
             int fragment = binToInt(chromosome, start, stop);
             phenotype += fragment;
-            if (i < 15) {
+            if (i < (chromosome.length / 4) - 1) {
                 phenotype += " ";
             }
         }
