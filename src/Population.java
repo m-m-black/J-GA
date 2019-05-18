@@ -15,6 +15,7 @@ public class Population {
     PrintWriter fileOutput;
     int[] target;
     int maxCost;
+    int matingPoolFactor;
 
     public Population(int popSize, int chromosomeLength, double crossoverRate, double mutationRate, int[] target) {
         this.population = new Individual[popSize];
@@ -25,6 +26,7 @@ public class Population {
         this.target = target;
         // Max Cost will change based on fitness function used
         maxCost = setMaxCost();
+        matingPoolFactor = setMatingPoolFactor();
         initPop(popSize, chromosomeLength);
         try {
             this.fileOutput = new PrintWriter(new FileWriter(new File("lines.txt")));
@@ -40,6 +42,15 @@ public class Population {
         // For absolute error cost function
         maxCost = (target.length * 16);
         return maxCost;
+    }
+
+    // User-specified number to multiply by when adding individuals to mating pool
+    private int setMatingPoolFactor() {
+        // For binary matching cost function
+        //matingPoolFactor = 100;
+        // For absolute error cost function
+        matingPoolFactor = 10;
+        return matingPoolFactor;
     }
 
     private void initPop(int popSize, int chromosomeLength) {
@@ -95,7 +106,7 @@ public class Population {
         for (Individual i: population) {
             // Add each Individual to the mating pool n times according to its cost score
             // Cost is scaled so low costs result in more additions to the pool
-            int n = (int) Utility.map(i.getCost(), 0, maxCost, maxCost, 0) * 100;
+            int n = (int) Utility.map(i.getCost(), 0, maxCost, maxCost, 0) * matingPoolFactor;
             for (int j = 0; j < n; j++) {
                 matingPool.add(i);
             }

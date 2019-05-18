@@ -19,8 +19,18 @@ Target phrases will need to be hard coded in Main.setTarget().
 
 Custom cost functions will need to be coded in Cost.assess().
 
-Based on the cost function used, maxCost will need to be set in Population.select().
+Based on the cost function used, maxCost will need to be set in Population.setMaxCost().
 
-If comparison is used as the cost function i.e. each step is penalised by 1 if not matching, maxCost = length of target.
+If binary comparison is used as the cost function i.e. each step is penalised by 1 if not matching, maxCost = length of target.
 
-If error is used as the cost function i.e. each step adds absolute error to cost, maxCost = target.length * maximum error per step, 16 for a 4-bit representation.
+If absolute error is used as the cost function i.e. each step adds absolute error to cost, maxCost = target.length * maximum error per step, 16 for a 4-bit representation.
+
+USER-SPECIFIED VALUES AND FUNCTIONS
+
+• Cost function: uncomment the desired cost function in Cost.assess().
+
+• Max Cost: uncomment desired maximum cost in Population.setMaxCost().
+
+• Mating Pool Factor: uncomment desired mating pool factor in Population.setMatingPoolFactor().
+
+After setting these 3 options, you're good to go!
