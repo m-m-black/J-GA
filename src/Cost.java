@@ -19,7 +19,7 @@ public class Cost {
             double targetValue = target[i];
 
             // Binary matching cost function
-            if (temp == targetValue) {
+            if (temp != targetValue) {
                 cost++;
             }
         }

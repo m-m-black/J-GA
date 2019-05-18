@@ -14,6 +14,7 @@ public class Population {
     double mutationRate;
     PrintWriter fileOutput;
     int[] target;
+    int maxCost;
 
     public Population(int popSize, int chromosomeLength, double crossoverRate, double mutationRate, int[] target) {
         this.population = new Individual[popSize];
@@ -22,6 +23,8 @@ public class Population {
         this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
         this.target = target;
+        // Max Cost will change based on fitness function used
+        maxCost = setMaxCost();
         initPop(popSize, chromosomeLength);
         try {
             this.fileOutput = new PrintWriter(new FileWriter(new File("lines.txt")));
@@ -30,19 +33,16 @@ public class Population {
         }
     }
 
+    // User-specified maximum cost for each individual
+    private int setMaxCost() {
+        maxCost = target.length;
+        return maxCost;
+    }
+
     private void initPop(int popSize, int chromosomeLength) {
         // Populate population with Individuals
         for (int i = 0; i < popSize; i++) {
             population[i] = new Individual(chromosomeLength);
-        }
-    }
-
-    public void printPop() {
-        for (Individual i: population) {
-            for (int d: i.getDna()) {
-                System.out.print(d);
-            }
-            System.out.println();
         }
     }
 
@@ -72,7 +72,7 @@ public class Population {
     }
 
     private Individual assessCost() {
-        double minCost = 0.0;
+        double minCost = maxCost;
         Individual bestIndividual = null;
         for (Individual i: population) {
             Cost.assess(i, target);
@@ -86,8 +86,6 @@ public class Population {
     }
 
     private void select() {
-        // Max Cost will change based on fitness function used
-        int maxCost = target.length;
         // Build mating pool
         matingPool.clear();
         for (Individual i: population) {
