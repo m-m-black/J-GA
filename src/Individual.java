@@ -3,21 +3,21 @@ import java.util.Random;
 public class Individual {
 
     private DNA dna;
-    private double fitness;
+    private double cost;
 
     public Individual(int chromosomeLength) {
         this.dna = new DNA(chromosomeLength);
-        this.fitness = 0.0;
+        this.cost = 0.0;
     }
 
     public Individual() {
         // Create new empty Individual
         this.dna = null;
-        this.fitness = 0.0;
+        this.cost = 0.0;
     }
 
-    public double getFitness() {
-        return fitness;
+    public double getCost() {
+        return cost;
     }
 
     public Individual crossover(Individual partner, int chromosomeLength, double mutationRate) {
@@ -62,8 +62,8 @@ public class Individual {
         return dna.getChromosome();
     }
 
-    public void setFitness(double fitness) {
-        this.fitness = fitness;
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
     public void setDNA(DNA dna) {

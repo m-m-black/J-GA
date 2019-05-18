@@ -56,29 +56,29 @@ public class Population {
 
     public void evolve(int genNum) {
         for (int i = 0; i < genNum; i++) {
-            // assess fitness of each Individual
-            Individual bestIndividual = assessFitness();
+            // assess cost of each Individual
+            Individual bestIndividual = assessCost();
             // perform selection
             select();
             // perform crossover
             reproduce(chromosomeLength, crossoverRate, mutationRate);
-            // Output bit string and fitness of best individual each generation
+            // Output bit string and cost of best individual each generation
             String phenotype = Utility.genoToPheno(bestIndividual.getDna());
             fileOutput.println(phenotype);
-            System.out.println("Generation " + i + ", best fitness: " + bestIndividual.getFitness());
+            System.out.println("Generation " + i + ", best cost: " + bestIndividual.getCost());
             System.out.println("Chromosome: " + phenotype);
         }
         fileOutput.close();
     }
 
-    private Individual assessFitness() {
-        double maxFitness = 0.0;
+    private Individual assessCost() {
+        double minCost = 0.0;
         Individual bestIndividual = null;
         for (Individual i: population) {
-            Fitness.assess(i, target);
-            double fitness = i.getFitness();
-            if (fitness > maxFitness) {
-                maxFitness = fitness;
+            Cost.assess(i, target);
+            double cost = i.getCost();
+            if (cost < minCost) {
+                minCost = cost;
                 bestIndividual = i;
             }
         }
@@ -89,8 +89,8 @@ public class Population {
         // Build mating pool
         matingPool.clear();
         for (Individual i: population) {
-            // Add each Individual to the mating pool n times according to its fitness score
-            int n = (int) i.getFitness() * 100;
+            // Add each Individual to the mating pool n times according to its cost score
+            int n = (int) i.getCost() * 100;
             for (int j = 0; j < n; j++) {
                 matingPool.add(i);
             }
