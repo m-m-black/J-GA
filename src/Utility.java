@@ -24,4 +24,8 @@ public class Utility {
         return phenotype;
     }
 
+    public static double scale(double n, double oldMin, double oldMax, double newMin, double newMax) {
+        return (newMax - newMin) * (n - oldMin) / (oldMax - oldMin) + newMin;
+    }
+
 } // End of Utility class
