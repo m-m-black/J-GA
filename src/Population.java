@@ -38,18 +38,18 @@ public class Population {
     // User-specified maximum cost for each individual
     private int setMaxCost() {
         // For binary matching cost function
-        //maxCost = target.length;
+        maxCost = target.length;
         // For absolute error cost function
-        maxCost = (target.length * 16);
+        //maxCost = (target.length * 16);
         return maxCost;
     }
 
     // User-specified number to multiply by when adding individuals to mating pool
     private int setMatingPoolFactor() {
         // For binary matching cost function
-        //matingPoolFactor = 100;
+        matingPoolFactor = 100;
         // For absolute error cost function
-        matingPoolFactor = 10;
+        //matingPoolFactor = 10;
         return matingPoolFactor;
     }
 
@@ -68,6 +68,7 @@ public class Population {
         return bitString;
     }
 
+    // Evolve for genNum number of generations
     public void evolve(int genNum) {
         for (int i = 0; i < genNum; i++) {
             // assess cost of each Individual
@@ -83,6 +84,23 @@ public class Population {
             System.out.println("Chromosome: " + phenotype);
         }
         fileOutput.close();
+    }
+
+    // Evolve until bestCost is 0
+    public void evolve() {
+        int gen = 0;
+        double bestCost = Integer.MAX_VALUE;
+        while (bestCost > 0) {
+            Individual bestIndividual = assessCost();
+            bestCost = bestIndividual.getCost();
+            select();
+            reproduce(chromosomeLength, crossoverRate, mutationRate);
+            String phenotype = Utility.genoToPheno(bestIndividual.getDna());
+            fileOutput.println(phenotype);
+            System.out.println("Generation " + gen + ", best cost: " + bestIndividual.getCost());
+            System.out.println("Chromosome: " + phenotype);
+            gen++;
+        }
     }
 
     private Individual assessCost() {

@@ -19,14 +19,14 @@ public class Cost {
             double targetValue = target[i];
 
             // Binary matching cost function
-//            if (temp != targetValue) {
-//                cost++;
-//            }
+            if (temp != targetValue) {
+                cost++;
+            }
 
             // Absolute error cost function
-            double err = targetValue - temp;
-            double absErr = Math.sqrt(err * err);
-            cost += absErr;
+//            double err = targetValue - temp;
+//            double absErr = Math.sqrt(err * err);
+//            cost += absErr;
         }
 
         // Update cost value, stored in individual itself

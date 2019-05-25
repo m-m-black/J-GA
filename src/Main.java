@@ -42,7 +42,9 @@ public class Main extends Thread {
                         // Initialise the Population
                         Population population = new Population(popSize, chromosomeLength, crossoverRate, mutationRate, target);
                         // Perform genNum generations of evolution
-                        population.evolve(genNum);
+                        //population.evolve(genNum);
+                        // Evolve until convergence
+                        population.evolve();
                         break;
                     case "QUIT":
                         quit = true;
