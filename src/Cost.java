@@ -9,7 +9,7 @@ public class Cost {
         // read Individual's DNA, calculate cost, update cost (stored in Individual)
         int[] chromosome = individual.getDna();
         int start, stop;
-        int cost = 0; // start at 0, cost increases
+        double cost = 0; // start at 0, cost increases
 
         // Iterate over chromosome, store int value of each slice of bit string as 'tmp'
         for (int i = 0; i < target.length; i++) {

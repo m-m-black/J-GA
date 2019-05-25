@@ -7,13 +7,13 @@ public class Individual {
 
     public Individual(int chromosomeLength) {
         this.dna = new DNA(chromosomeLength);
-        this.cost = 0.0;
+        this.cost = Integer.MAX_VALUE;
     }
 
     public Individual() {
         // Create new empty Individual
         this.dna = null;
-        this.cost = 0.0;
+        this.cost = Integer.MAX_VALUE;
     }
 
     public double getCost() {
