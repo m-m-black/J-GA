@@ -13,6 +13,7 @@ public class Population {
     double crossoverRate;
     double mutationRate;
     PrintWriter fileOutput;
+    PrintWriter dataOutput;
     int[] target;
     int maxCost;
     int matingPoolFactor;
@@ -30,6 +31,7 @@ public class Population {
         initPop(popSize, chromosomeLength);
         try {
             this.fileOutput = new PrintWriter(new FileWriter(new File("lines.txt")));
+            this.dataOutput = new PrintWriter(new FileWriter(new File("data.txt")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,14 +62,6 @@ public class Population {
         }
     }
 
-    private String buildBitString(int[] chromosome) {
-        String bitString = "";
-        for (int i: chromosome) {
-            bitString += i;
-        }
-        return bitString;
-    }
-
     // Evolve for genNum number of generations
     public void evolve(int genNum) {
         for (int i = 0; i < genNum; i++) {
@@ -80,10 +74,12 @@ public class Population {
             // Output bit string and cost of best individual each generation
             String phenotype = Utility.genoToPheno(bestIndividual.getDna());
             fileOutput.println(phenotype);
+            dataOutput.println(bestIndividual.getCost());
             System.out.println("Generation " + i + ", best cost: " + bestIndividual.getCost());
             System.out.println("Chromosome: " + phenotype);
         }
         fileOutput.close();
+        dataOutput.close();
     }
 
     // Evolve until bestCost is 0
